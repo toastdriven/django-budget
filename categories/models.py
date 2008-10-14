@@ -25,7 +25,7 @@ class StandardMetadata(models.Model):
 
 class Category(StandardMetadata):
     name = models.CharField(max_length=128)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     
     class Meta:
         verbose_name_plural = 'Categories'
