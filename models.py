@@ -6,7 +6,7 @@ from budget.categories.models import Category, StandardMetadata
 
 class Budget(StandardMetadata):
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     start_date = models.DateTimeField(default=datetime.datetime.now)
     
     def __unicode__(self):
@@ -25,9 +25,8 @@ class Budget(StandardMetadata):
 class BudgetEstimate(StandardMetadata):
     budget = models.ForeignKey(Budget, related_name='estimates')
     category = models.ForeignKey(Category, related_name='estimates')
-    name = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=11, decimal_places=2)
     
     def __unicode__(self):
-        return u"%s - %s" % (self.name, self.amount)
+        return u"%s - %s" % (self.category.name, self.amount)
     
