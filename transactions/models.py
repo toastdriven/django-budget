@@ -1,8 +1,7 @@
 import datetime
 from decimal import Decimal
 from django.db import models
-from budget.models import StandardMetadata
-from budget.categories.models import Category
+from budget.categories.models import Category, StandardMetadata
 
 
 TRANSACTION_TYPES = (
