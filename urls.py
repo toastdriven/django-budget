@@ -6,7 +6,7 @@ Dashboard
 Year Summary
 Month Summary
 CRUD Budget
-CRUD BudgetCategoryEstimates
+CRUD BudgetEstimates
 
 Eventually:
 Custom date range
@@ -23,7 +23,7 @@ urlpatterns = patterns('budget.views',
     url(r'^summary/(?P<year>\d{4})/(?P<month>\d{2})/$', 'month_summary', name='budget_month_summary'),
     
     # Categories
-    url(r'^category/$', include('budget.categories.urls')),
+    url(r'^category/', include('budget.categories.urls')),
     
     # Budget
     url(r'^budget/$', 'budget_list', name='budget_budget_list'),
@@ -38,5 +38,5 @@ urlpatterns = patterns('budget.views',
     url(r'^budget/(?P<budget_slug>\w+)/estimate/delete/(?P<slug>)/$', 'estimate_delete', name='budget_estimate_delete'),
     
     # Transaction
-    url(r'^transaction/$', include('budget.transactions.urls')),
+    url(r'^transaction/', include('budget.transactions.urls')),
 )
