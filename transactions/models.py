@@ -1,7 +1,7 @@
 import datetime
 from decimal import Decimal
 from django.db import models
-from budget.categories.models import Category, StandardMetadata
+from budget.categories.models import Category, StandardMetadata, ActiveManager
 
 
 TRANSACTION_TYPES = (
@@ -10,7 +10,7 @@ TRANSACTION_TYPES = (
 )
 
 
-class TransactionManager(models.Manager):
+class TransactionManager(ActiveManager):
     pass
 
 
@@ -22,6 +22,7 @@ class Transaction(StandardMetadata):
     date = models.DateTimeField(default=datetime.datetime.now)
     
     objects = models.Manager()
+    active = ActiveManager()
     # debits = TransactionDebitManager()
     # credits = TransactionCreditManager()
     

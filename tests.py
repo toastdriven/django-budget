@@ -137,4 +137,28 @@
 200
 >>> r.context[-1]['estimates']
 []
+
+
+# Summaries
+
+>>> r = c.get('/budget/summary/2008/')
+>>> r.status_code # /budget/summary/2008/
+200
+>>> r.context[-1]['budget']
+<Budget: Test Budget>
+
+>>> r = c.get('/budget/summary/2008/10/')
+>>> r.status_code # /budget/summary/2008/10/
+200
+>>> r.context[-1]['budget']
+<Budget: Test Budget>
+
+
+# Dashboard
+
+>>> r = c.get('/budget/')
+>>> r.status_code # /budget/
+200
+>>> r.context[-1]['budget']
+<Budget: Test Budget>
 """

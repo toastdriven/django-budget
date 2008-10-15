@@ -6,7 +6,7 @@ from budget.transactions.models import Transaction
 from budget.transactions.forms import TransactionForm
 
 def transaction_list(request):
-    transactions = Transaction.objects.filter(is_deleted=False)
+    transactions = Transaction.active.all()
     return render_to_response('budget/transactions/list.html', {
         'transactions': transactions,
     }, context_instance=RequestContext(request))
@@ -25,7 +25,7 @@ def transaction_add(request):
     }, context_instance=RequestContext(request))
 
 def transaction_edit(request, transaction_id):
-    transaction = get_object_or_404(Transaction, pk=transaction_id, is_deleted=False)
+    transaction = get_object_or_404(Transaction.active.all(), pk=transaction_id)
     if request.POST:
         form = TransactionForm(request.POST, instance=transaction)
         
@@ -40,7 +40,7 @@ def transaction_edit(request, transaction_id):
     }, context_instance=RequestContext(request))
 
 def transaction_delete(request, transaction_id):
-    transaction = get_object_or_404(Transaction, pk=transaction_id, is_deleted=False)
+    transaction = get_object_or_404(Transaction.active.all(), pk=transaction_id)
     if request.POST:
         if request.POST.get('confirmed'):
             transaction.delete()

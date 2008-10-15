@@ -6,7 +6,7 @@ from budget.categories.models import Category
 from budget.categories.forms import CategoryForm
 
 def category_list(request):
-    categories = Category.objects.filter(is_deleted=False)
+    categories = Category.active.all()
     return render_to_response('budget/categories/list.html', {
         'categories': categories,
     }, context_instance=RequestContext(request))
@@ -25,7 +25,7 @@ def category_add(request):
     }, context_instance=RequestContext(request))
 
 def category_edit(request, slug):
-    category = get_object_or_404(Category, slug=slug, is_deleted=False)
+    category = get_object_or_404(Category.active.all(), slug=slug)
     if request.POST:
         form = CategoryForm(request.POST, instance=category)
         
@@ -40,7 +40,7 @@ def category_edit(request, slug):
     }, context_instance=RequestContext(request))
 
 def category_delete(request, slug):
-    category = get_object_or_404(Category, slug=slug, is_deleted=False)
+    category = get_object_or_404(Category.active.all(), slug=slug)
     if request.POST:
         if request.POST.get('confirmed') and request.POST['confirmed'] == 'Yes':
             category.delete()

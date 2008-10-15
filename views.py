@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -9,16 +10,27 @@ from budget.transactions.models import Transaction
 from budget.forms import BudgetEstimateForm, BudgetForm
 
 def dashboard(request):
-    return render_to_response('dashboard.html', {}, context_instance=RequestContext(request))
+    budget = Budget.active.most_current_for_date(datetime.datetime.today())
+    return render_to_response('budget/dashboard.html', {
+        'budget': budget,
+    }, context_instance=RequestContext(request))
 
-def year_summary(request):
-    return render_to_response('.html', {}, context_instance=RequestContext(request))
+def summary_year(request, year):
+    end_of_year = datetime.date(int(year), 12, 31)
+    budget = Budget.active.most_current_for_date(end_of_year)
+    return render_to_response('budget/summary_year.html', {
+        'budget': budget,
+    }, context_instance=RequestContext(request))
 
-def month_summary(request):
-    return render_to_response('.html', {}, context_instance=RequestContext(request))
+def summary_month(request, year, month):
+    end_of_month = datetime.date(int(year), int(month) + 1, 1) - datetime.timedelta(days=1)
+    budget = Budget.active.most_current_for_date(end_of_month)
+    return render_to_response('budget/summary_month.html', {
+        'budget': budget,
+    }, context_instance=RequestContext(request))
 
 def budget_list(request):
-    budgets = Budget.objects.filter(is_deleted=False)
+    budgets = Budget.active.all()
     return render_to_response('budget/budgets/list.html', {
         'budgets': budgets,
     }, context_instance=RequestContext(request))
@@ -37,7 +49,7 @@ def budget_add(request):
     }, context_instance=RequestContext(request))
 
 def budget_edit(request, slug):
-    budget = get_object_or_404(Budget, slug=slug, is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=slug)
     if request.POST:
         form = BudgetForm(request.POST, instance=budget)
         
@@ -52,7 +64,7 @@ def budget_edit(request, slug):
     }, context_instance=RequestContext(request))
 
 def budget_delete(request, slug):
-    budget = get_object_or_404(Budget, slug=slug, is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=slug)
     if request.POST:
         if request.POST.get('confirmed'):
             budget.delete()
@@ -62,15 +74,15 @@ def budget_delete(request, slug):
     }, context_instance=RequestContext(request))
 
 def estimate_list(request, budget_slug):
-    budget = get_object_or_404(Budget, slug=budget_slug, is_deleted=False)
-    estimates = BudgetEstimate.objects.filter(is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=budget_slug)
+    estimates = BudgetEstimate.active.all()
     return render_to_response('budget/estimates/list.html', {
         'budget': budget,
         'estimates': estimates,
     }, context_instance=RequestContext(request))
 
 def estimate_add(request, budget_slug):
-    budget = get_object_or_404(Budget, slug=budget_slug, is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=budget_slug)
     if request.POST:
         form = BudgetEstimateForm(request.POST)
         
@@ -85,7 +97,7 @@ def estimate_add(request, budget_slug):
     }, context_instance=RequestContext(request))
 
 def estimate_edit(request, budget_slug, estimate_id):
-    budget = get_object_or_404(Budget, slug=budget_slug, is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=budget_slug)
     try:
         estimate = budget.estimates.get(pk=estimate_id, is_deleted=False)
     except ObjectDoesNotExist:
@@ -105,7 +117,7 @@ def estimate_edit(request, budget_slug, estimate_id):
     }, context_instance=RequestContext(request))
 
 def estimate_delete(request, budget_slug, estimate_id):
-    budget = get_object_or_404(Budget, slug=budget_slug, is_deleted=False)
+    budget = get_object_or_404(Budget.active.all(), slug=budget_slug)
     try:
         estimate = budget.estimates.get(pk=estimate_id, is_deleted=False)
     except ObjectDoesNotExist:
