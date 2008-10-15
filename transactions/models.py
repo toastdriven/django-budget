@@ -15,11 +15,11 @@ class TransactionManager(ActiveManager):
 
 
 class Transaction(StandardMetadata):
-    transaction_type = models.CharField(max_length=32, choices=TRANSACTION_TYPES, default='debit')
+    transaction_type = models.CharField(max_length=32, choices=TRANSACTION_TYPES, default='debit', db_index=True)
     name = models.CharField(max_length=255, blank=True)
-    category = models.ForeignKey(Category, blank=True, null=True)
+    category = models.ForeignKey(Category)
     amount = models.DecimalField(max_digits=11, decimal_places=2)
-    date = models.DateTimeField(default=datetime.datetime.now)
+    date = models.DateField(default=datetime.date.today, db_index=True)
     
     objects = models.Manager()
     active = ActiveManager()

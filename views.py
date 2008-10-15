@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -15,18 +16,78 @@ def dashboard(request):
         'budget': budget,
     }, context_instance=RequestContext(request))
 
+def summary_list(request):
+    dates = []
+    
+    try:
+        # import pdb; pdb.set_trace()
+        oldest_date = Transaction.active.order_by('date')[0].date
+        newest_date = Transaction.active.order_by('-date')[0].date
+        current_date = datetime.date(oldest_date.year, oldest_date.month, 1)
+        
+        while current_date <= newest_date:
+            dates.append(datetime.date(current_date.year, current_date.month, 1))
+            current_year, current_month = current_date.year, current_date.month
+            
+            if current_month >= 12:
+                current_month = 1
+                current_year += 1
+            
+            current_date = datetime.date(current_year, current_month + 1, 1)
+    except IndexError:
+        # Just don't populate the dates.
+        pass
+    
+    return render_to_response('budget/summaries/summary_list.html', {
+        'dates': dates,
+    }, context_instance=RequestContext(request))
+
 def summary_year(request, year):
-    end_of_year = datetime.date(int(year), 12, 31)
-    budget = Budget.active.most_current_for_date(end_of_year)
-    return render_to_response('budget/summary_year.html', {
+    start_date = datetime.date(int(year), 1, 1)
+    end_date = datetime.date(int(year), 12, 31)
+    budget = Budget.active.most_current_for_date(end_date)
+    estimates_and_transactions = []
+    actual_total = Decimal('0.0')
+    
+    for estimate in budget.estimates.all():
+        actual_amount = estimate.actual_amount(start_date, end_date)
+        actual_total += actual_amount
+        estimates_and_transactions.append({
+            'estimate': estimate,
+            'transactions': estimate.actual_transactions(start_date, end_date),
+            'actual_amount': actual_amount,
+        })
+    
+    return render_to_response('budget/summaries/summary_year.html', {
         'budget': budget,
+        'estimates_and_transactions': estimates_and_transactions,
+        'actual_total': actual_total,
+        'start_date': start_date,
+        'end_date': end_date,
     }, context_instance=RequestContext(request))
 
 def summary_month(request, year, month):
-    end_of_month = datetime.date(int(year), int(month) + 1, 1) - datetime.timedelta(days=1)
-    budget = Budget.active.most_current_for_date(end_of_month)
-    return render_to_response('budget/summary_month.html', {
+    start_date = datetime.date(int(year), int(month), 1)
+    end_date = datetime.date(int(year), int(month) + 1, 1) - datetime.timedelta(days=1)
+    budget = Budget.active.most_current_for_date(end_date)
+    estimates_and_transactions = []
+    actual_total = Decimal('0.0')
+    
+    for estimate in budget.estimates.all():
+        actual_amount = estimate.actual_amount(start_date, end_date)
+        actual_total += actual_amount
+        estimates_and_transactions.append({
+            'estimate': estimate,
+            'transactions': estimate.actual_transactions(start_date, end_date),
+            'actual_amount': actual_amount,
+        })
+    
+    return render_to_response('budget/summaries/summary_month.html', {
         'budget': budget,
+        'estimates_and_transactions': estimates_and_transactions,
+        'actual_total': actual_total,
+        'start_date': start_date,
+        'end_date': end_date,
     }, context_instance=RequestContext(request))
 
 def budget_list(request):

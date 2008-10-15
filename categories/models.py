@@ -9,7 +9,7 @@ class StandardMetadata(models.Model):
     """
     created = models.DateTimeField(default=datetime.datetime.now)
     updated = models.DateTimeField()
-    is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False, db_index=True)
     
     class Meta:
         abstract = True

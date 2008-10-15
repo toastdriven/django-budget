@@ -19,8 +19,9 @@ urlpatterns = patterns('budget.views',
     url(r'^$', 'dashboard', name='budget_dashboard'),
     
     # Summaries
+    url(r'^summary/$', 'summary_list', name='budget_summary_list'),
     url(r'^summary/(?P<year>\d{4})/$', 'summary_year', name='budget_summary_year'),
-    url(r'^summary/(?P<year>\d{4})/(?P<month>\d{2})/$', 'summary_month', name='budget_summary_month'),
+    url(r'^summary/(?P<year>\d{4})/(?P<month>\d{1,2})/$', 'summary_month', name='budget_summary_month'),
     
     # Categories
     url(r'^category/', include('budget.categories.urls')),
