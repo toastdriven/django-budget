@@ -73,8 +73,14 @@
 # Setup
 >>> from budget.models import Budget
 >>> budget = Budget.objects.create(name='Test Budget', slug='test-budget', start_date='2008-10-14')
+
+>>> from django.core.management import call_command
+>>> call_command('loaddata', 'categories_testdata.yaml') #doctest: +ELLIPSIS
+Installing yaml fixture 'categories_testdata' from ...
+Installed 1 object(s) from 1 fixture(s)
+
 >>> from budget.categories.models import Category
->>> cat = Category.objects.create(name='Misc', slug='misc')
+>>> cat = Category.objects.get(slug='misc')
 
 >>> r = c.get('/budget/budget/test-budget/estimate/')
 >>> r.status_code # /budget/budget/test-budget/estimate/
@@ -161,4 +167,16 @@
 200
 >>> r.context[-1]['budget']
 <Budget: Test Budget>
+>>> r.context[-1]['latest_debits']
+[]
+>>> r.context[-1]['latest_credits']
+[]
+>>> r.context[-1]['estimated_amount']
+Decimal("250.0")
+>>> r.context[-1]['amount_used']
+Decimal("0.0")
+>>> r.context[-1]['progress_bar_percent']
+0
+>>> r.context[-1]['progress_bar_level']
+'green'
 """

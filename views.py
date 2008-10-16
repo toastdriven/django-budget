@@ -11,10 +11,38 @@ from budget.transactions.models import Transaction
 from budget.forms import BudgetEstimateForm, BudgetForm
 
 def dashboard(request):
+    today = datetime.date.today()
+    start_date = datetime.date(today.year, today.month, 1)
+    end_date = datetime.date(today.year, today.month + 1, 1) - datetime.timedelta(days=1)
     budget = Budget.active.most_current_for_date(datetime.datetime.today())
+    
+    latest_debits = Transaction.debits.get_latest()
+    latest_credits = Transaction.credits.get_latest()
+    
+    estimated_amount = budget.monthly_estimated_total()
+    amount_used = budget.actual_total(start_date, end_date)
+    progress_bar_percent = int(amount_used / estimated_amount * 100)
+    
+    if progress_bar_percent >= 100:
+        progress_bar_level = 'red'
+        progress_bar_percent = 100
+    elif progress_bar_percent >= 75:
+        progress_bar_level = 'yellow'
+    else:
+        progress_bar_level = 'green'
+    
     return render_to_response('budget/dashboard.html', {
         'budget': budget,
+        'latest_debits': latest_debits,
+        'latest_credits': latest_credits,
+        'estimated_amount': estimated_amount,
+        'amount_used': amount_used,
+        'progress_bar_percent': progress_bar_percent,
+        'progress_bar_level': progress_bar_level,
     }, context_instance=RequestContext(request))
+
+def setup(request):
+    return render_to_response('budget/setup.html', {}, context_instance=RequestContext(request))
 
 def summary_list(request):
     dates = []
@@ -46,18 +74,7 @@ def summary_year(request, year):
     start_date = datetime.date(int(year), 1, 1)
     end_date = datetime.date(int(year), 12, 31)
     budget = Budget.active.most_current_for_date(end_date)
-    estimates_and_transactions = []
-    actual_total = Decimal('0.0')
-    
-    for estimate in budget.estimates.all():
-        actual_amount = estimate.actual_amount(start_date, end_date)
-        actual_total += actual_amount
-        estimates_and_transactions.append({
-            'estimate': estimate,
-            'transactions': estimate.actual_transactions(start_date, end_date),
-            'actual_amount': actual_amount,
-        })
-    
+    estimates_and_transactions, actual_total = budget.estimates_and_transactions(start_date, end_date)
     return render_to_response('budget/summaries/summary_year.html', {
         'budget': budget,
         'estimates_and_transactions': estimates_and_transactions,
@@ -70,18 +87,7 @@ def summary_month(request, year, month):
     start_date = datetime.date(int(year), int(month), 1)
     end_date = datetime.date(int(year), int(month) + 1, 1) - datetime.timedelta(days=1)
     budget = Budget.active.most_current_for_date(end_date)
-    estimates_and_transactions = []
-    actual_total = Decimal('0.0')
-    
-    for estimate in budget.estimates.all():
-        actual_amount = estimate.actual_amount(start_date, end_date)
-        actual_total += actual_amount
-        estimates_and_transactions.append({
-            'estimate': estimate,
-            'transactions': estimate.actual_transactions(start_date, end_date),
-            'actual_amount': actual_amount,
-        })
-    
+    estimates_and_transactions, actual_total = budget.estimates_and_transactions(start_date, end_date)
     return render_to_response('budget/summaries/summary_month.html', {
         'budget': budget,
         'estimates_and_transactions': estimates_and_transactions,

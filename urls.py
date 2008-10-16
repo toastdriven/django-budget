@@ -17,6 +17,7 @@ Day Summary
 
 urlpatterns = patterns('budget.views',
     url(r'^$', 'dashboard', name='budget_dashboard'),
+    url(r'^setup/$', 'setup', name='budget_setup'),
     
     # Summaries
     url(r'^summary/$', 'summary_list', name='budget_summary_list'),

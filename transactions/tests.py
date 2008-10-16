@@ -2,8 +2,13 @@
 >>> from django.test import Client
 >>> c = Client()
 
+>>> from django.core.management import call_command
+>>> call_command('loaddata', 'categories_testdata.yaml') #doctest: +ELLIPSIS
+Installing yaml fixture 'categories_testdata' from ...
+Installed 1 object(s) from 1 fixture(s)
+
 >>> from budget.categories.models import Category
->>> cat = Category.objects.create(name='Misc', slug='misc')
+>>> cat = Category.objects.get(slug='misc')
 
 >>> r = c.get('/budget/transaction/')
 >>> r.status_code # /budget/transaction/
@@ -17,7 +22,7 @@
 >>> type(r.context[-1]['form'])
 <class 'budget.transactions.forms.TransactionForm'>
 
->>> r = c.post('/budget/transaction/add/', {'transaction_type': 'credit', 'name': 'Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
+>>> r = c.post('/budget/transaction/add/', {'transaction_type': 'credit', 'category': cat.id, 'notes': 'Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
 >>> r.status_code # /budget/transaction/add/
 302
 >>> r['Location']
@@ -37,7 +42,7 @@
 >>> r.context[-1]['transaction']
 <Transaction: Paycheck (Credit) - 300>
 
->>> r = c.post('/budget/transaction/edit/1/', {'transaction_type': 'credit', 'name': 'My Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
+>>> r = c.post('/budget/transaction/edit/1/', {'transaction_type': 'credit', 'category': cat.id, 'notes': 'My Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
 >>> r.status_code # /budget/transaction/edit/1/
 302
 >>> r['Location']
