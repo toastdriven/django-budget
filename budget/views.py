@@ -31,8 +31,6 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
             the actual amount spent for the month
         progress_bar_percent
             the percentage of the budget actually spent so far
-        progress_bar_level
-            the color to use to visually indicate the budget's overall status
     """
     today = datetime.date.today()
     start_date = datetime.date(today.year, today.month, 1)
@@ -53,12 +51,7 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
     progress_bar_percent = int(amount_used / estimated_amount * 100)
     
     if progress_bar_percent >= 100:
-        progress_bar_level = 'red'
         progress_bar_percent = 100
-    elif progress_bar_percent >= 75:
-        progress_bar_level = 'yellow'
-    else:
-        progress_bar_level = 'green'
     
     return render_to_response(template_name, {
         'budget': budget,
@@ -67,7 +60,6 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
         'estimated_amount': estimated_amount,
         'amount_used': amount_used,
         'progress_bar_percent': progress_bar_percent,
-        'progress_bar_level': progress_bar_level,
     }, context_instance=RequestContext(request))
 
 
