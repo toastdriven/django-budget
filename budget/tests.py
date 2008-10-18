@@ -17,7 +17,7 @@
 >>> type(r.context[-1]['form'])
 <class 'budget.forms.BudgetForm'>
 
->>> r = c.post('/budget/budget/add/', {'name': 'Our Budget', 'start_date': '2008-10-14'})
+>>> r = c.post('/budget/budget/add/', {'name': 'Our Budget', 'start_date_0': '2008-10-14', 'start_date_1': '08:00:00'})
 >>> r.status_code # /budget/budget/add/
 302
 >>> r['Location']
@@ -37,7 +37,7 @@
 >>> r.context[-1]['budget']
 <Budget: Our Budget>
 
->>> r = c.post('/budget/budget/edit/our-budget/', {'name': 'Our Family Budget', 'start_date': '2008-10-14'})
+>>> r = c.post('/budget/budget/edit/our-budget/', {'name': 'Our Family Budget', 'start_date_0': '2008-10-14', 'start_date_1': '08:00:00'})
 >>> r.status_code # /budget/budget/edit/our-budget/
 302
 >>> r['Location']
