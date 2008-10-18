@@ -167,9 +167,9 @@ Installed 1 object(s) from 1 fixture(s)
 200
 >>> r.context[-1]['budget']
 <Budget: Test Budget>
->>> r.context[-1]['latest_debits']
+>>> r.context[-1]['latest_expenses']
 []
->>> r.context[-1]['latest_credits']
+>>> r.context[-1]['latest_incomes']
 []
 >>> r.context[-1]['estimated_amount']
 Decimal("250.0")

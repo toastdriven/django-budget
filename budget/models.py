@@ -11,6 +11,12 @@ class BudgetManager(ActiveManager):
 
 
 class Budget(StandardMetadata):
+    """
+    An object representing a budget.
+    
+    Only estimates are tied to a budget object, which allows different budgets
+    to be applied to the same set of transactions for comparision.
+    """
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     start_date = models.DateTimeField(default=datetime.datetime.now, db_index=True)
@@ -56,6 +62,12 @@ class Budget(StandardMetadata):
 
 
 class BudgetEstimate(StandardMetadata):
+    """
+    The individual line items that make up a budget.
+    
+    Some examples include possible items like "Mortgage", "Rent", "Food", "Misc"
+    and "Car Payment".
+    """
     budget = models.ForeignKey(Budget, related_name='estimates')
     category = models.ForeignKey(Category, related_name='estimates')
     amount = models.DecimalField(max_digits=11, decimal_places=2)
@@ -70,7 +82,7 @@ class BudgetEstimate(StandardMetadata):
         return self.amount * 12
     
     def actual_transactions(self, start_date, end_date):
-        return Transaction.active.filter(category=self.category, date__gte=start_date, date__lte=end_date)
+        return Transaction.active.filter(category=self.category, date__range=(start_date, end_date))
     
     def actual_amount(self, start_date, end_date):
         total = Decimal('0.0')

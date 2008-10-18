@@ -22,7 +22,7 @@ Installed 1 object(s) from 1 fixture(s)
 >>> type(r.context[-1]['form'])
 <class 'budget.transactions.forms.TransactionForm'>
 
->>> r = c.post('/budget/transaction/add/', {'transaction_type': 'credit', 'category': cat.id, 'notes': 'Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
+>>> r = c.post('/budget/transaction/add/', {'transaction_type': 'income', 'category': cat.id, 'notes': 'Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
 >>> r.status_code # /budget/transaction/add/
 302
 >>> r['Location']
@@ -32,7 +32,7 @@ Installed 1 object(s) from 1 fixture(s)
 >>> r.status_code # /budget/transaction/
 200
 >>> r.context[-1]['transactions']
-[<Transaction: Paycheck (Credit) - 300>]
+[<Transaction: Paycheck (Income) - 300>]
 
 >>> r = c.get('/budget/transaction/edit/1/')
 >>> r.status_code # /budget/transaction/edit/1/
@@ -40,9 +40,9 @@ Installed 1 object(s) from 1 fixture(s)
 >>> type(r.context[-1]['form'])
 <class 'budget.transactions.forms.TransactionForm'>
 >>> r.context[-1]['transaction']
-<Transaction: Paycheck (Credit) - 300>
+<Transaction: Paycheck (Income) - 300>
 
->>> r = c.post('/budget/transaction/edit/1/', {'transaction_type': 'credit', 'category': cat.id, 'notes': 'My Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
+>>> r = c.post('/budget/transaction/edit/1/', {'transaction_type': 'income', 'category': cat.id, 'notes': 'My Paycheck', 'amount': '300.00', 'date': '2008-10-14'})
 >>> r.status_code # /budget/transaction/edit/1/
 302
 >>> r['Location']
@@ -52,13 +52,13 @@ Installed 1 object(s) from 1 fixture(s)
 >>> r.status_code # /budget/transaction/
 200
 >>> r.context[-1]['transactions']
-[<Transaction: My Paycheck (Credit) - 300>]
+[<Transaction: My Paycheck (Income) - 300>]
 
 >>> r = c.get('/budget/transaction/delete/1/')
 >>> r.status_code # /budget/transaction/delete/1/
 200
 >>> r.context[-1]['transaction']
-<Transaction: My Paycheck (Credit) - 300>
+<Transaction: My Paycheck (Income) - 300>
 
 >>> r = c.post('/budget/transaction/delete/1/', {'confirmed': 'Yes'})
 >>> r.status_code # /budget/transaction/delete/1/

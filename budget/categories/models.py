@@ -29,6 +29,14 @@ class ActiveManager(models.Manager):
 
 
 class Category(StandardMetadata):
+    """
+    Categories are the means to loosely tie together the transactions and
+    estimates.
+    
+    They are used to aggregate transactions together and compare them to the
+    appropriate budget estimate. For the reasoning behind this, the docstring
+    on the Transaction object explains this.
+    """
     name = models.CharField(max_length=128)
     slug = models.SlugField(unique=True)
     

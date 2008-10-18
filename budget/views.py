@@ -21,10 +21,10 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
     Context:
         budget
             the most current budget object
-        latest_debits
-            the most recent debits (by default, the last 10)
-        latest_credits
-            the most recent credits (by default, the last 10)
+        latest_expenses
+            the most recent expenses (by default, the last 10)
+        latest_incomes
+            the most recent incomes (by default, the last 10)
         estimated_amount
             the budget's estimated total for the month
         amount_used
@@ -37,10 +37,16 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
     today = datetime.date.today()
     start_date = datetime.date(today.year, today.month, 1)
     end_date = datetime.date(today.year, today.month + 1, 1) - datetime.timedelta(days=1)
-    budget = budget_model_class.active.most_current_for_date(datetime.datetime.today())
     
-    latest_debits = transaction_model_class.debits.get_latest()
-    latest_credits = transaction_model_class.credits.get_latest()
+    try:
+        budget = budget_model_class.active.most_current_for_date(datetime.datetime.today())
+    except ObjectDoesNotExist:
+        # Since there are no budgets at this point, pass them on to setup
+        # as this view is meaningless without at least basic data in place.
+        return HttpResponseRedirect(reverse('budget_setup'))
+    
+    latest_expenses = transaction_model_class.expenses.get_latest()
+    latest_incomes = transaction_model_class.incomes.get_latest()
     
     estimated_amount = budget.monthly_estimated_total()
     amount_used = budget.actual_total(start_date, end_date)
@@ -56,8 +62,8 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
     
     return render_to_response(template_name, {
         'budget': budget,
-        'latest_debits': latest_debits,
-        'latest_credits': latest_credits,
+        'latest_expenses': latest_expenses,
+        'latest_incomes': latest_incomes,
         'estimated_amount': estimated_amount,
         'amount_used': amount_used,
         'progress_bar_percent': progress_bar_percent,

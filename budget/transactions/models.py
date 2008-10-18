@@ -5,8 +5,8 @@ from budget.categories.models import Category, StandardMetadata, ActiveManager
 
 
 TRANSACTION_TYPES = (
-    ('debit', 'Debit'),
-    ('credit', 'Credit'),
+    ('expense', 'Expense'),
+    ('income', 'Income'),
 )
 
 
@@ -15,18 +15,26 @@ class TransactionManager(ActiveManager):
         return self.get_query_set().order_by('-date', '-created')[0:limit]
 
 
-class TransactionDebitManager(TransactionManager):
+class TransactionExpenseManager(TransactionManager):
     def get_query_set(self):
-        return super(TransactionDebitManager, self).get_query_set().filter(transaction_type='debit')
+        return super(TransactionExpenseManager, self).get_query_set().filter(transaction_type='expense')
 
 
-class TransactionCreditManager(TransactionManager):
+class TransactionIncomeManager(TransactionManager):
     def get_query_set(self):
-        return super(TransactionCreditManager, self).get_query_set().filter(transaction_type='credit')
+        return super(TransactionIncomeManager, self).get_query_set().filter(transaction_type='income')
 
 
 class Transaction(StandardMetadata):
-    transaction_type = models.CharField(max_length=32, choices=TRANSACTION_TYPES, default='debit', db_index=True)
+    """
+    Represents incomes/expenses for the party doing the budgeting.
+    
+    Transactions are not tied to individual budgets because this allows
+    different budgets to applied (like a filter) to a set of transactions.
+    It also allows for budgets to change through time without altering the
+    actual incoming/outgoing funds.
+    """
+    transaction_type = models.CharField(max_length=32, choices=TRANSACTION_TYPES, default='expense', db_index=True)
     notes = models.CharField(max_length=255, blank=True)
     category = models.ForeignKey(Category)
     amount = models.DecimalField(max_digits=11, decimal_places=2)
@@ -34,8 +42,8 @@ class Transaction(StandardMetadata):
     
     objects = models.Manager()
     active = ActiveManager()
-    debits = TransactionDebitManager()
-    credits = TransactionCreditManager()
+    expenses = TransactionExpenseManager()
+    incomes = TransactionIncomeManager()
     
     def __unicode__(self):
         return u"%s (%s) - %s" % (self.notes, self.get_transaction_type_display(), self.amount)
