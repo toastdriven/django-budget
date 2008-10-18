@@ -18,7 +18,7 @@ def transaction_list(request, model_class=Transaction, template_name='budget/tra
             paginated list of transaction objects
         paginator
             A Django Paginator instance
-        page:
+        page
             current page of transaction objects
     """
     transaction_list = model_class.active.order_by('-date', '-created')
