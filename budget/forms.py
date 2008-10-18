@@ -1,9 +1,12 @@
+import datetime
 from django import forms
 from django.template.defaultfilters import slugify
 from budget.models import Budget, BudgetEstimate
 
 
 class BudgetForm(forms.ModelForm):
+    start_date = forms.DateTimeField(initial=datetime.datetime.now, required=False, widget=forms.SplitDateTimeWidget)
+    
     class Meta:
         model = Budget
         fields = ('name', 'start_date')
