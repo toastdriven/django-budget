@@ -1,0 +1,22 @@
+=====================================================
+django-budget: A simple personal finance application.
+=====================================================
+
+```django-budget``` is a simple budgeting application for use with Django. It 
+is designed to manage personal finances. We used it to replace a complicated 
+Excel spreadsheet that didn't retail all the details we wanted.
+
+
+Requirements
+============
+
+```django-budget``` requires Python 2.3 or better and Django 1.0 or better.
+
+
+Installation
+============
+
+#. Either copy/symlink the ```budget``` app into your project or place it somewhere on your ```PYTHONPATH```.
+#. Add the ```budget.categories```, ```budget.transactions``` and ```budget``` apps to your ```INSTALLED_APPS```.
+#. Run ```./manage.py syncdb```.
+#. Add ```(r'^budget/', include('budgetproject.budget.urls')),``` to your ```urls.py```.
