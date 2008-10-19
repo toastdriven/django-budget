@@ -82,7 +82,9 @@ class BudgetEstimate(StandardMetadata):
         return self.amount * 12
     
     def actual_transactions(self, start_date, end_date):
-        return Transaction.active.filter(category=self.category, date__range=(start_date, end_date))
+        # Estimates should only report on expenses to prevent incomes from 
+        # (incorrectly) artificially inflating totals.
+        return Transaction.expenses.filter(category=self.category, date__range=(start_date, end_date))
     
     def actual_amount(self, start_date, end_date):
         total = Decimal('0.0')
