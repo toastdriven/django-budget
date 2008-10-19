@@ -177,6 +177,4 @@ Decimal("250.0")
 Decimal("0.0")
 >>> r.context[-1]['progress_bar_percent']
 0
->>> r.context[-1]['progress_bar_level']
-'green'
 """

@@ -9,7 +9,7 @@ register = template.Library()
 # descending order by percentage.
 BUDGET_DEFAULT_COLORS = (
     # (percentage, CSS color class)
-    (1.0, 'red'),
+    (1.001, 'red'),
     (0.75, 'yellow'),
     (0.0, 'green'),
 )
