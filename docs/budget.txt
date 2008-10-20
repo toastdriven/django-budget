@@ -1,10 +1,24 @@
-=====================================================
-django-budget: A simple personal finance application.
-=====================================================
+=======================================================
+django-budget: A simple personal budgeting application.
+=======================================================
 
 ```django-budget``` is a simple budgeting application for use with Django. It 
 is designed to manage personal finances. We used it to replace a complicated 
-Excel spreadsheet that didn't retail all the details we wanted.
+Excel spreadsheet that didn't retain all the details we wanted.
+
+It was implemented in Django based on familiarity, quick time to implement 
+and the premise that it could be accessible everywhere. In practice, we run 
+this locally (NOT on a publicly accessible website).
+
+
+A Note About Security
+=====================
+
+It is recommended that anyone using this application add further security by 
+either protecting the whole app with HTTP Auth, wrap the views with the
+```login-required``` decorator, run it on a local machine or implement similar
+protections. This application is for your use and makes no assumptions about 
+how viewable the data is to other people.
 
 
 Requirements
