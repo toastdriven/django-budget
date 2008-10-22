@@ -8,7 +8,7 @@ class StandardMetadata(models.Model):
     A basic (abstract) model for metadata.
     """
     created = models.DateTimeField(default=datetime.datetime.now)
-    updated = models.DateTimeField()
+    updated = models.DateTimeField(default=datetime.datetime.now)
     is_deleted = models.BooleanField(default=False, db_index=True)
     
     class Meta:
