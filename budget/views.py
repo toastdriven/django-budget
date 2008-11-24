@@ -139,11 +139,11 @@ def summary_month(request, year, month, budget_model_class=Budget, template_name
     start_date = datetime.date(int(year), int(month), 1)
     end_year, end_month = int(year), int(month) + 1
     
-    if end_month >= 12:
+    if end_month > 12:
         end_year += 1
         end_month = 1
     
-    end_date = datetime.date(int(end_year), int(end_month) + 1, 1) - datetime.timedelta(days=1)
+    end_date = datetime.date(end_year, end_month, 1) - datetime.timedelta(days=1)
     budget = budget_model_class.active.most_current_for_date(end_date)
     estimates_and_transactions, actual_total = budget.estimates_and_transactions(start_date, end_date)
     return render_to_response(template_name, {
