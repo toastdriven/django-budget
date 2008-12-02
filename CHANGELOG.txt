@@ -1,3 +1,10 @@
+v1.0.2
+======
+
+* Corrected end_date in the dashboard view.
+* Corrected end_date in the summary_month view.
+
+
 v1.0.1
 ======
 
