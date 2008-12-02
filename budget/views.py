@@ -34,7 +34,13 @@ def dashboard(request, budget_model_class=Budget, transaction_model_class=Transa
     """
     today = datetime.date.today()
     start_date = datetime.date(today.year, today.month, 1)
-    end_date = datetime.date(today.year, today.month + 1, 1) - datetime.timedelta(days=1)
+    end_year, end_month = today.year, today.month + 1
+    
+    if end_month > 12:
+        end_year += 1
+        end_month = 1
+    
+    end_date = datetime.date(end_year, end_month, 1) - datetime.timedelta(days=1)
     
     try:
         budget = budget_model_class.active.most_current_for_date(datetime.datetime.today())
