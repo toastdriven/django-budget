@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #BBDDFF;
+    color: #333333;
+    font-family: Helvetica, Verdana, Arial;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a, a:visited, a:hover {
+    color: #0000FF;
+}
+
+img {
+    border-width: 0px;
+}
+
+ul li, ol li, dl dd {
+    margin-left: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table tr th,
+table tr td {
+    text-align: left;
+    vertical-align: top;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    margin-bottom: 5px;
+}
+
+
+
+#page_wrapper {
+    background-color: #FFFFFF;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: left;
+    width: 760px;
+}
+
+#page_header {
+    background-color: #BBDDFF;
+    padding: 10px;
+    text-align: center;
+}
+
+#page_navigation {
+    background-color: #BBDDFF;
+    height: 26px;
+}
+
+#page_navigation ul {
+    list-style: none;
+}
+
+#page_navigation ul li {
+    background-color: #E0E0E0;
+    float: left;
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+#page_navigation ul li a,
+#page_navigation ul li a:visited,
+#page_navigation ul li a:hover {
+    color: #333333;
+    display: block;
+    font-weight: bold;
+    padding: 4px;
+    text-decoration: none;
+}
+
+#page_navigation ul li a.active {
+    background-color: #FFFFFF;
+}
+
+#page_content {
+    clear: both;
+    padding: 10px;
+}
+
+#content {
+    margin: 10px;
+}
+
+#page_footer {
+    clear: both;
+    text-align: center;
+}
+
+#latest_expenses {
+    float: left;
+    width: 45%;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+#latest_incomes {
+    float: left;
+    width: 45%;
+    margin-top: 10px;
+}
+
+#budget_progress_bar {
+    clear: both;
+    padding-top: 10px;
+    text-align: center;
+}
+
+#progress_wrapper {
+    border: solid 1px #333333;
+    height: 20px;
+    overflow: hidden;
+    text-align: left;
+}
+
+#progress_bar {
+    height: 100%;
+}
+
+#progress_bar.green {
+    background-color: #88FF88;
+}
+
+#progress_bar.yellow {
+    background-color: #FFFF88;
+}
+
+#progress_bar.red {
+    background-color: #FF8888;
+}
+
+.report_table {
+    width: 100%;
+}
+
+.report_table thead {
+    border-bottom: solid 1px #333333;
+}
+
+.report_table .numeric {
+    text-align: right;
+    width: 25%;
+}
+
+.report_table .even {
+    background-color: #EEEEEE;
+    border-bottom: solid 1px #E0E0E0;
+    border-top: solid 1px #E0E0E0;
+}
+
+.report_table td span.green {
+    color: inherit;
+}
+
+.report_table td span.yellow {
+    color: #AAAA00;
+}
+
+.report_table td span.red {
+    color: #CC3333;
+}
+
+.report_table tfoot {
+    border-top: solid 1px #333333;
+}
+
+.form_table {
+    margin-top: 10px;
+}
+
+.deletion {
+    margin-top: 15px;
+}
+
+.previous_next_wrapper {
+    height: 20px;
+    padding-top: 10px;
+}
+
+.previous,
+.next {
+    float: left;
+    margin-right: 5px;
+}
+
+.previous a,
+.previous span,
+.next a,
+.next span {
+    background-color: #EEEEEE;
+    border: solid 1px #E0E0E0;
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.previous a:hover,
+.next a:hover {
+    background-color: #DDDDFF;
+    border: solid 1px #0000FF;
+}
+
+#id_start_date_1 {
+    /* Cheap trick to make the DatePicker look correct. */
+    display: block;
+}
+
+.hide_show_button,
+.hide_show_button:visited {
+    color: #888888;
+    text-decoration: none;
+}
+
+.transaction_table {
+    display: none;
+    margin: 0px 0px 0px 20px;
+    width: 100%;
+}
+
+.transaction_table tbody tr td {
+    color: #888888;
+    width: 20%;
+}
+
+.transaction_table tbody tr td.wide {
+    width: 60%;
+}

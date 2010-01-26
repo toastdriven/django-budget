@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Setup{% endblock %}
+
+{% block content %}
+    <h2>Setup</h2>
+    
+    <p>
+        Before you can start using this application, we need to put together
+        a budget. Three quick steps and you'll be ready to start using 
+        everything. You can come back to this screen at any time to make 
+        changes or add new items.
+    </p>
+    
+    <h3>Step 1. Create Categories</h3>
+    
+    <p>
+        Before we can put together the budget, we need categories to tie
+        the incomes/expenses you enter to the line items in your budget. 
+        Nothing more than a descriptive name is required for each category,
+        though you may want to err on the side of being a little broad
+        when naming the category.
+    </p>
+    
+    <p>
+        <a href="{% url budget_category_list %}">View/Add Categories</a>
+    </p>
+    
+    <h3>Step 2. Create A Budget</h3>
+    
+    <p>
+        Once you have a couple categories in place, we can create a budget.
+        Again, not a lot of information is needed here, just a name and when
+        you'd like the budget to start being used. This application always
+        tries to use the most recent budget for whatever date is chosen.
+    </p>
+    
+    <p>
+        <a href="{% url budget_budget_list %}">View/Add Budgets</a>
+    </p>
+    
+    <h3>Step 3. Create Budget Estimates</h3>
+    
+    <p>
+        The last step is to create the line items that make up a budget. To do
+        this, we'll tie together the budget the estimate applies to, the 
+        category it covers and how much you'd like to allocate to that type of
+        expense per month.
+    </p>
+    
+    <p>
+        To view/add estimates, go into the Budget list and click the 
+        "View/Add Estimates" link on the budget you'd like to work with.
+    </p>
+    
+    <p>
+        <a href="{% url budget_budget_list %}">View/Add Estimates Within A Budget</a>
+    </p>
+    
+    <h3>Step 4. All Set!</h3>
+    
+    <p>
+        You can now use the rest of the application. You'll probably want to 
+        start with the "Transactions" area to add some incomes/expenses, then
+        go to the "Dashboard" for an overview or "Summaries" for more detail.
+    </p>
+{% endblock %}

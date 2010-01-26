@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #FFFFFF;
+    font-family: Helvetica, Verdana, Arial;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a, a:visited, a:hover {
+    color: #0000FF;
+}
+
+img {
+    border-width: 0px;
+}
+
+ul li, ol li, dl dd {
+    margin-left: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table tr th,
+table tr td {
+    text-align: left;
+    vertical-align: top;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    margin-bottom: 5px;
+}
+
+
+
+#page_wrapper {
+    width: 760px;
+}
+
+#page_header {
+    text-align: center;
+}
+
+#page_navigation {
+    display: none;
+}
+
+#page_content {
+    padding: 10px;
+}
+
+#content {
+    margin: 10px;
+}
+
+#page_footer {
+    clear: both;
+    text-align: center;
+}
+
+.report_table {
+    width: 100%;
+}
+
+.report_table thead {
+    border-bottom: solid 1px #333333;
+}
+
+.report_table .numeric {
+    text-align: right;
+    width: 25%;
+}
+
+.report_table .even {
+    background-color: #EEEEEE;
+    border-bottom: solid 1px #E0E0E0;
+    border-top: solid 1px #E0E0E0;
+}
+
+.report_table tfoot {
+    border-top: solid 1px #333333;
+}
+
+.form_table {
+    margin-top: 10px;
+}
+
+.previous_next_wrapper {
+    display: none;
+}

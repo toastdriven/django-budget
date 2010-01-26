@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load budget %}
+
+{% block page_title %}Month Summary For {{ start_date|date:"F Y" }}{% endblock %}
+
+{% block content %}
+    <h2>Month Summary For {{ start_date|date:"F Y" }}</h2>
+    
+    <h3>{{ budget.name }}</h3>
+    
+    <table class="report_table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th class="numeric">Estimated Total</th>
+                <th class="numeric">Actual Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if estimates_and_transactions %}
+                {% for eat_group in estimates_and_transactions %}
+                    <tr class="{% cycle odd,even %}">
+                        <td>
+                            {{ eat_group.estimate.category.name }}
+                            
+                            {% if eat_group.transactions %}
+                                <a href="#" id="id_hide_show_{{ eat_group.estimate.category.slug }}" class="hide_show_button">[+]</a>
+                            
+                                <table id="id_hidden_transaction_list_{{ eat_group.estimate.category.slug }}" class="transaction_table">
+                                    <tbody>
+                                    {% for trans in eat_group.transactions %}
+                                        <tr>
+                                            <td class="wide">{{ trans.notes }}</td>
+                                            <td>{{ trans.date|date:"m/d/Y" }}</td>
+                                            <td class="numeric">
+                                                ${{ trans.amount|stringformat:".02f" }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </td>
+                        <td class="numeric">${{ eat_group.estimate.amount|stringformat:".02f" }}</td>
+                        <td class="numeric">
+                            <span class="{% colorize_amount eat_group.estimate.amount eat_group.actual_amount %}">${{ eat_group.actual_amount|stringformat:".02f" }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No data to show.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr class="divider">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="total">
+                <td>
+                    <strong>Total:</strong>
+                </td>
+                <td class="numeric">${{ budget.monthly_estimated_total|stringformat:".02f" }}</td>
+                <td class="numeric">
+                    <span class="{% colorize_amount budget.monthly_estimated_total actual_total %}">${{ actual_total|stringformat:".02f" }}</span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

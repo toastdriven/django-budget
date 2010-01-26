@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Delete Transaction{% endblock %}
+
+{% block content %}
+    <h2>Delete Transaction</h2>
+    
+    <p>Are you sure you want to delete "{{ transaction }}"?</p>
+    
+    <form method="post" action=".">
+        <table class="form_table">
+            <tr>
+                <td>
+                    <input type="submit" name="confirmed" value="Yes">
+                    or
+                    <input type="button" name="do_not_delete" value="No">
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

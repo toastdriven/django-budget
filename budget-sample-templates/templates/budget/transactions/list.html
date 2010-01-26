@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Transaction List{% endblock %}
+
+{% block content %}
+    <h2>Transaction List</h2>
+    
+    <p>
+        <a href="{% url budget_transaction_add %}">Add A Transaction</a>
+    </p>
+    
+    
+    <table class="report_table">
+        <thead>
+            <tr>
+                <th>Notes</th>
+                <th>Type</th>
+                <th class="numeric">Date</th>
+                <th class="numeric">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if transactions %}
+                {% for transaction in transactions %}
+                    <tr class="{% cycle odd,even %}">
+                        <td><a href="{% url budget_transaction_edit transaction.id %}">{{ transaction.notes }}</a></td>
+                        <td>{{ transaction.get_transaction_type_display }}</td>
+                        <td class="numeric">{{ transaction.date|date:"m/d/Y" }}</td>
+                        <td class="numeric">${{ transaction.amount|stringformat:".02f" }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No transactions found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+    {% include 'budget/pagination.html' %}
+{% endblock %}

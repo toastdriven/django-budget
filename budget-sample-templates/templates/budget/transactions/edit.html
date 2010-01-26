@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Edit Transaction{% endblock %}
+
+{% block content %}
+    <h2>Edit Transaction</h2>
+    
+    <form method="post" action=".">
+        <table class="form_table">
+            {{ form.as_table }}
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" name="confirmed" value="Save">
+                    or
+                    <a href="{% url budget_transaction_list %}">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <p class="deletion">
+        You can also 
+        <a href="{% url budget_transaction_delete transaction.id %}">delete</a>
+        this transaction.
+    </p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Summaries{% endblock %}
+
+{% block content %}
+    <h2>Summaries</h2>
+    
+    {% if dates %}
+        <dl>
+        {% for date in dates %}
+            {% ifchanged date.year %}<dt><a href="{% url budget_summary_year date.year %}">{{ date.year }}</a></dt>{% endifchanged %}
+            <dd>
+                <a href="{% url budget_summary_month date.year,date.month %}">{{ date|date:"F" }}</a>
+            </dd>
+        {% endfor %}
+        </dl>
+    {% else %}
+        <p>
+            It looks like there haven't been any transactions, so there's 
+            nothing to show here.
+        </p>
+    {% endif %}
+{% endblock %}

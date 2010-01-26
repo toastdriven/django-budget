@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Estimate List For {{ budget.name }}{% endblock %}
+
+{% block content %}
+    <h2>
+        Estimate List For <a href="{% url budget_estimate_list budget.slug %}">{{ budget.name }}</a>
+    </h2>
+    
+    <p>
+        <a href="{% url budget_estimate_add budget.slug %}">Add An Estimate</a>
+    </p>
+    
+    <table class="report_table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th class="numeric">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if estimates %}
+                {% for estimate in estimates %}
+                    <tr class="{% cycle odd,even %}">
+                        <td>
+                            <a href="{% url budget_estimate_edit budget.slug,estimate.id %}">{{ estimate.category.name }}</a>
+                        </td>
+                        <td class="numeric">
+                            ${{ estimate.amount|stringformat:".02f" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">No estimates found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    
+    {% include 'budget/pagination.html' %}
+{% endblock %}

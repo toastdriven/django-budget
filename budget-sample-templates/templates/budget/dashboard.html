@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load budget %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+    
+    <div id="latest_expenses">
+        <h3>Latest Expenses</h3>
+        
+        <table class="report_table latest_expenses_table">
+            <thead>
+                <tr>
+                    <th>Notes</th>
+                    <th>Date</th>
+                    <th class="numeric">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if latest_expenses %}
+                    {% for expense in latest_expenses %}
+                        <tr class="{% cycle odd,even %}">
+                            <td>
+                                <a href="{% url budget_transaction_edit expense.id %}">{{ expense.notes }}</a>
+                            </td>
+                            <td>{{ expense.date|date:"m/d/Y" }}</td>
+                            <td class="numeric">${{ expense.amount|stringformat:".02f" }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No recent expenses found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        
+        <p>
+            <a href="{% url budget_transaction_add %}">Add A New Transaction</a>
+        </p>
+    </div>
+    
+    <div id="latest_incomes">
+        <h3>Latest Incomes</h3>
+        
+        
+        <table class="report_table latest_incomes_table">
+            <thead>
+                <tr>
+                    <th>Notes</th>
+                    <th>Date</th>
+                    <th class="numeric">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if latest_incomes %}
+                    {% for income in latest_incomes %}
+                        <tr class="{% cycle odd,even %}">
+                            <td>
+                                <a href="{% url budget_transaction_edit income.id %}">{{ income.notes }}</a>
+                            </td>
+                            <td>{{ income.date|date:"m/d/Y" }}</td>
+                            <td class="numeric">${{ income.amount|stringformat:".02f" }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No recent incomes found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        
+        <p>
+            <a href="{% url budget_transaction_add %}">Add A New Transaction</a>
+        </p>
+    </div>
+    
+    <div id="budget_progress_bar">
+        <h3>This Month's Usage</h3>
+        
+        <div id="progress_wrapper">
+            <div id="progress_bar" class="{% colorize_amount estimated_amount amount_used %}" style="width: {{ progress_bar_percent }}%">&nbsp;</div>
+        </div>
+        
+        <p>
+            ${{ amount_used|stringformat:".02f" }} out of ${{ estimated_amount|stringformat:".02f" }}.
+        </p>
+    </div>
+{% endblock %}
