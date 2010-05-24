@@ -1,3 +1,9 @@
+v1.0.3
+======
+
+* Fixed the ``Budget`` model to exclude deleted estimates.
+
+
 v1.0.2
 ======
 

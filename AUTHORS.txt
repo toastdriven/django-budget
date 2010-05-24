@@ -1,0 +1,7 @@
+Primary author:
+
+  * Daniel Lindsley
+
+Contributors:
+
+  * Brad Pitcher (brad) for a patch involving deleted estimates.

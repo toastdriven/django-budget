@@ -29,7 +29,7 @@ class Budget(StandardMetadata):
     
     def monthly_estimated_total(self):
         total = Decimal('0.0')
-        for estimate in self.estimates.all():
+        for estimate in self.estimates.exclude(is_deleted=True):
             total += estimate.amount
         return total
     
@@ -40,7 +40,7 @@ class Budget(StandardMetadata):
         estimates_and_transactions = []
         actual_total = Decimal('0.0')
 
-        for estimate in self.estimates.all():
+        for estimate in self.estimates.exclude(is_deleted=True):
             actual_amount = estimate.actual_amount(start_date, end_date)
             actual_total += actual_amount
             estimates_and_transactions.append({
@@ -54,7 +54,7 @@ class Budget(StandardMetadata):
     def actual_total(self, start_date, end_date):
         actual_total = Decimal('0.0')
 
-        for estimate in self.estimates.all():
+        for estimate in self.estimates.exclude(is_deleted=True):
             actual_amount = estimate.actual_amount(start_date, end_date)
             actual_total += actual_amount
         
