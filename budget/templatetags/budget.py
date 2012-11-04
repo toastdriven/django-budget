@@ -30,6 +30,10 @@ class ColorizeAmountNode(template.Node):
             estimate = self.estimated_amount.resolve(context)
             actual = self.actual_amount.resolve(context)
             estimate = make_decimal(estimate)
+
+            if estimate == 0:
+                return ''
+
             actual = make_decimal(actual)            
             percentage = actual / estimate
             
