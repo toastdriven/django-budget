@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-03 19:47-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:21 categories/models.py:41
+msgid "Name"
+msgstr "Nombre"
+
+#: models.py:22 categories/models.py:42
+msgid "Slug"
+msgstr "Slug"
+
+#: models.py:23
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#: models.py:66
+msgid "Budget"
+msgstr "Presupuesto"
+
+#: models.py:67
+msgid "Budgets"
+msgstr "Presupuestos"
+
+#: models.py:78 transactions/models.py:43
+msgid "Amount"
+msgstr "Monto"
+
+#: models.py:101
+msgid "Budget estimate"
+msgstr "Presupuesto estimado"
+
+#: models.py:102
+msgid "Budget estimates"
+msgstr "Estimaciones presupuestarias"
+
+#: categories/models.py:11
+msgid "Created"
+msgstr "Creado"
+
+#: categories/models.py:12
+msgid "Updated"
+msgstr "Actualizado"
+
+#: categories/models.py:13
+msgid "Is deleted"
+msgstr "Esta borrado"
+
+#: categories/models.py:48
+msgid "Category"
+msgstr "Categoría"
+
+#: categories/models.py:49
+msgid "Categories"
+msgstr "Categorías"
+
+#: transactions/models.py:11
+msgid "Expense"
+msgstr "Gasto"
+
+#: transactions/models.py:12
+msgid "Income"
+msgstr "Ingreso"
+
+#: transactions/models.py:40
+msgid "Transaction type"
+msgstr "Tipo de transacción"
+
+#: transactions/models.py:41
+msgid "Notes"
+msgstr "Notas"
+
+#: transactions/models.py:44
+msgid "Date"
+msgstr "Fecha"
+
+#: transactions/models.py:55
+msgid "Transaction"
+msgstr "Transacción"
+
+#: transactions/models.py:56
+msgid "Transactions"
+msgstr "Transacciones"
